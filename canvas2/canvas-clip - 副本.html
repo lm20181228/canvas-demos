@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>剪纸效果</title>
+</head>
+<body>
+	<canvas id="canvas" height="300" width="600"></canvas>
+</body>
+<script type="text/javascript">
+	window.onload = function(){
+		var canvas = document.getElementById("canvas");
+		var context = canvas.getContext("2d");
+		context.shadowColor =  "red";
+		context.shadowOffsetX = 10;
+		context.shadowOffsetY = 10;
+		context.shadowBlur = 10;
+		//用非零环绕原则来判断是否镂空 
+		context.arc(150,150,120,0,2*Math.PI);
+		context.arc(150,150,50,0,2*Math.PI,true);
+		context.fillStyle = "#058";
+		context.fill();
+		context.closePath();
+	}
+</script>
+</html>

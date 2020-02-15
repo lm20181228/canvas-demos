@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>文字渲染</title>
+</head>
+<body>
+	<canvas id="canvas" height="300" width="600" style="border:1px solid red;"></canvas>
+</body>
+<script type="text/javascript">
+	window.onload = function(){
+		var canvas = document.getElementById("canvas");
+		var context = canvas.getContext("2d");
+		// font-style font-variant font-weight font-size  font-family
+		// 
+		context.font = "bold 40px 微软雅黑";
+		// context.fillStyle = "red";
+		var linear = context.createLinearGradient(100,100,400,100);
+		linear.addColorStop(0,"red");
+		linear.addColorStop(0.2,"yellow");
+		linear.addColorStop(0.4,"green");
+		linear.addColorStop(0.6,"blue");
+		linear.addColorStop(0.8,"pink");
+		context.lineWidth = 2;
+		// context.textAlign 用于调整文本的水平对齐方式 left middle right，基于文字定位坐标的对齐方式
+		// context.textBaseline 用于调整文本的垂直对齐方式 	top middle bottom
+		context.textAlign = "left";
+		context.textBaseline = 'bottom';
+		// 文本的度量 context.measureText(string).width 获取字符串在canvas上渲染的宽度
+		
+		context.strokeStyle =linear;
+		context.strokeText("阿sakfkasfha双方",20,100,400);
+		var textWidth = context.measureText("asfa发哈十几块放好久").width;
+		context.fillText("获取文字宽度"+textWidth,20 ,120);
+		var img = new Image();
+		img.src = "img/1.jpg";
+		img.onload = function(){
+			var patte = context.createPattern(img,"repeat");
+			context.fillStyle =patte;
+			context.fillText("阿sakfkasfha双方",100,150,400)
+		}
+		
+		// context.strokeStyle = "red";
+		
+		// context.strokeText("阿sakfkasfha双方",100,100);
+
+	}
+</script>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>旋转测试</title>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+	</body>
+	<script>
+		window.onload = function(){
+			var canvas = document.getElementById("canvas");
+			canvas.width = 800;
+			canvas.height = 800;
+			var cxt = canvas.getContext("2d");
+			cxt.beginPath();
+			
+			/*cxt.save();
+			cxt.fillStyle = "aqua"
+			cxt.translate(100,100);
+			cxt.fillRect(0,0,100,100);
+			cxt.stroke();
+			cxt.closePath();
+			cxt.restore();*/
+			//cxt.translate(-100,-100);//需要提前将偏移量归位，才不会影响后面的路径
+			//canvas状态的保存和恢复
+			//save() restore() 用于保存一段路径。通常需要成对出现。保存的是restore()离最近的一个sava()之间的内容
+			/*cxt.beginPath();
+			cxt.fillStyle = "red";
+			cxt.fillRect(0,0,100,100)
+			cxt.closePath();*/
+			cxt.save();
+			cxt.beginPath();
+			cxt.transform(2,0.2,0.2,1.5,0,0);
+			/**多次transform会产生级联效果，叠加。
+			 * setTransform()忽略之前的transform，把最新定义的矩阵定义为单位矩阵*/
+			cxt.rect(0,0,200,200);
+			cxt.fillStyle = "red";
+			cxt.strokeStyle = "green";
+			cxt.lineWidth = 5;
+			cxt.fill();
+			cxt.stroke();
+			cxt.closePath();
+			cxt.restore();
+		}
+	</script>
+</html>

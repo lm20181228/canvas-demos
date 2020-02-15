@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>bezier贝塞尔曲线</title>
+</head>
+<body>
+	<canvas id="canvas" height="800" width="800"></canvas>
+
+</body>
+<script type="text/javascript">
+	window.onload = function(){
+		var canvas =  document.getElementById("canvas");
+		var context = canvas.getContext("2d");
+		drawLand(context);
+	}
+	function drawLand(context){
+		context.save();
+		context.beginPath();
+		context.moveTo(0,600);
+		// 二次贝塞尔曲线，起始点（曲线的起始点），控制点，结束点（曲线的结束点）；二次贝塞尔曲线与arcTo()的不同之处在于起始点是否是曲线的起始点。
+		// context.quadraticCurveTo(200,200,150,300);
+		// 贝塞尔三次曲线 起始点，控制点1,控制点2,结束点
+		context.bezierCurveTo(300,480,500,740,canvas.width,590);
+		context.lineTo(canvas.width,canvas.height);
+		context.lineTo(0,canvas.height);
+		context.lineTo(0,600);
+		var linear = context.createLinearGradient(0,400,0,canvas.height);
+		linear.addColorStop(0,"#580")
+		linear.addColorStop(1,"#030")
+		context.fillStyle =linear;
+		context.fill();
+		// context.stroke();
+		context.closePath();
+		context.restore();
+	}
+</script>
+</html>

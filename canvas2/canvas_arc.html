@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>弧线绘制</title>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+	</body>
+	<script>
+		var canvas = document.getElementById("canvas");
+		canvas.width = 800;
+		canvas.height = 800;
+		canvas.style.border = "1px solid red"
+		var context = canvas.getContext("2d");
+		//圆角矩形
+		var width = 300;
+		var height = 200;
+		var r = 20;
+		
+		/*context.beginPath();
+		context.moveTo(r,100);
+		context.lineTo(r+width,100);
+		context.stroke();
+		context.closePath();
+		
+		context.beginPath();
+		context.arc(r+width,100+r,r,0,1.5*Math.PI,true)
+		context.stroke();
+		context.closePath();
+		
+		context.beginPath();
+		context.lineTo(2*r+width,100+r);
+		context.lineTo(2*r+width,100+r+height);
+		context.stroke();
+		context.closePath();
+		
+		context.beginPath();
+		context.arc(r+width,100+r+height,r,0,0.5*Math.PI)
+		context.stroke();
+		context.closePath();
+		
+		context.beginPath();
+		context.lineTo(r+width,100+2*r+height);
+		context.lineTo(r,100+2*r+height);
+		context.stroke();
+		context.closePath();
+		
+		context.beginPath();
+		context.arc(r,100+r+height,r,0.5*Math.PI,1*Math.PI)
+		context.stroke();
+		context.closePath();
+		
+		context.beginPath();
+		context.lineTo(0,100+r+height);
+		context.lineTo(0,100+r);
+		context.stroke();
+		context.closePath();
+		
+		context.beginPath();
+		context.arc(r,100+r,r,1*Math.PI,1.5*Math.PI)
+		context.stroke();
+		context.closePath();*/
+		
+		context.beginPath();
+		context.arc(r,100+r,r,1*Math.PI,1.5*Math.PI)
+		
+		context.arc(r+width,100+r,r,1.5*Math.PI,2*Math.PI)
+		
+		context.arc(r+width,100+r+height,r,0,0.5*Math.PI)
+		
+		context.arc(r,100+r+height,r,0.5*Math.PI,1*Math.PI)
+		
+		context.arc(r,100+r,r,1*Math.PI,1.5*Math.PI)
+		context.stroke();
+		context.closePath();
+	</script>
+</html>

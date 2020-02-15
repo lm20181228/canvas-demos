@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>arcTo</title>
+</head>
+<body>
+	<canvas id="canvas" height="700" width="800" style="border:1px solid red;"></canvas>
+
+</body>
+<script type="text/javascript">
+	var canvas = document.getElementById("canvas");
+	var context = canvas.getContext("2d");
+
+	
+	// function arcToFun(context,x0,y0,x1,y1,x2,y2,r){
+	// 	context.beginPath();
+	// 	context.moveTo(x0,y0);
+	// 	context.lineTo(x1,y1);
+	// 	context.lineTo(x2,y2);
+		
+
+		
+	// 	context.stroke();
+	// 	context.closePath();
+	// 	context.beginPath();
+	// 	context.moveTo(x0,y0);
+
+	// 	context.arcTo(x1,y1,x2,y2,r);
+	// 	context.str
+	// 	okeStyle = "red";
+	// 	context.lineWidth = 5;
+	// 	context.stroke();
+	// 	context.closePath();
+	// }
+	// arcToFun(context,50,100,300,100,300,400,100);
+
+	// 绘制一个月亮
+	// 先绘制一个半圆 
+	// function drawMoon(context,rgix,rgiy,r){
+	// 	context.beginPath();
+	// 	context.arc(rgix,rgiy,r,0*Math.PI,2*Math.PI,true);
+	// 	// context.moveTo(rgix,rgiy-r);
+	// 	// var x1 = rgix*2;
+	// 	// var y1 = rgiy;
+	// 	// context.arcTo(x1,y1,rgix,rgiy+r,(r*dis(rgix,rgiy-r,x1,y1,rgix,rgiy))/(x1 - rgix))
+	// 	var linearGrad = context.createRadialGradient(rgix,rgiy,0,rgix,rgiy,r+20)
+	// 	linearGrad.addColorStop(0.0,"yellow");
+	// 	linearGrad.addColorStop(0.9,"#fff");
+		
+	// 	// context.strokeStyle= linearGrad;
+	// 	// context.stroke();
+	// 	context.fillStyle =linearGrad;
+	// 	context.fill();
+	// 	// context.closePath();
+	// }
+
+	// drawMoon(context,110,110,50)
+	// 先确定圆弧的坐标位置，再计算半径
+	function dis(x0,y0,x1,y1,x2,y2){
+		return l = Math.sqrt((y2 - y0)*(y2 - y0) + (x1- x2)*(x1- x2));
+	}
+	// 制作一个单位月亮
+	function fillMoon(context,d,translate,scale,rot,fillColor){
+		context.save();
+		context.translate(translate[0],translate[1]);
+		context.scale(scale,scale);
+		context.rotate(rot*Math.PI/180);
+		drawMoon(context,d);
+		context.fillStyle = fillColor;
+		context.fill();
+		context.restore();
+	}
+	fillMoon(context,2.2,[50,100],100,30,"yellow")
+	function drawMoon(conext,d){
+		context.beginPath();
+		context.arc(0,0,1,0.5*Math.PI,1.5*Math.PI,true);
+
+		// 设置起始点，控制点,结束点和半径
+		context.moveTo(0,-1);
+
+		context.arcTo(d,0,0,1,dis(0,-1,d,0,0,0)/d);
+		
+		
+		context.closePath();
+	}
+	// fillMoon();	
+</script>
+</html>

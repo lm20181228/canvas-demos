@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>尝试Canvas画布工具</title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			#canvas{
+				border: 1px solid gray;
+				display: block;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" ></canvas>
+	</body>
+	<script src="js/digit.js"></script>
+	<script src="js/countDown.js"></script>
+	<script>
+		/*var canvas = document.getElementById("canvas");
+		var context = canvas.getContext("2d");*/
+		
+		/*context.beginPath();
+		context.fillRect(50,50,400,400);
+		context.lineWidth = 5;
+		context.strokeStyle = "green";
+		context.stroke();
+		context.closePath();
+		
+		context.beginPath();
+		context.moveTo(50,50);
+		context.lineTo(50,450);
+		context.lineTo(250,250);
+		context.lineTo(50,50);
+		context.fillStyle = "aquamarine"
+		context.fill();
+		context.closePath();
+		
+		context.beginPath();
+		context.moveTo(50,50);
+		context.lineTo(250,250);
+		context.lineTo(450,50);
+		context.lineTo(50,50);
+		context.fillStyle = "green";
+		context.fill();
+		context.closePath();
+		
+		context.beginPath();
+		context.moveTo(50,450);
+		context.lineTo(150,350);
+		context.lineTo(250,450);
+		context.lineTo(50,450);
+		context.fillStyle = "pink";
+		context.fill();
+		context.closePath();
+		
+		context.beginPath();
+		context.moveTo(250,450);
+		context.lineTo(450,450);
+		context.lineTo(450,250);
+		context.lineTo(250,450);
+		context.fillStyle = "greenyellow";
+		context.fill();
+		context.closePath();
+		
+		context.beginPath();
+		context.moveTo(150,350);
+		context.lineTo(250,250);
+		context.lineTo(350,350);
+		context.lineTo(250,450);
+		context.lineTo(150,350);
+		context.fillStyle = "cadetblue";
+		context.fill();
+		context.closePath();
+		
+		context.beginPath();
+		context.moveTo(250,250);
+		context.lineTo(350,150);
+		context.lineTo(350,350);
+		context.lineTo(250,250);
+		context.fillStyle = "yellow";
+		context.fill();
+		context.closePath();
+		
+		context.beginPath();
+		context.moveTo(450,50);
+		context.lineTo(450,250);
+		context.lineTo(350,350);
+		context.lineTo(350,150);
+		context.lineTo(450,50);
+		context.fillStyle = "firebrick";
+		context.fill();
+		context.closePath();*/
+		
+		//新方法
+		/*var tangram = [
+			{p:[{x:50,y:50},{x:50,y:450},{x:250,y:250},{x:50,y:50}],color:"aquamarine"},
+			{p:[{x:50,y:50},{x:250,y:250},{x:450,y:50},{x:50,y:50}],color:"green"},
+			{p:[{x:50,y:450},{x:150,y:350},{x:250,y:450},{x:50,y:450}],color:"pink"},
+			{p:[{x:250,y:450},{x:450,y:450},{x:450,y:250},{x:250,y:450}],color:"greenyellow"},
+			{p:[{x:150,y:350},{x:250,y:250},{x:350,y:350},{x:250,y:450},{x:150,y:350}],color:"cadetblue"},
+			{p:[{x:250,y:250},{x:350,y:150},{x:350,y:350},{x:250,y:250}],color:"yellow"},
+			{p:[{x:450,y:50},{x:450,y:250},{x:350,y:350},{x:350,y:150},{x:450,y:50}],color:"firebrick"},
+		];
+		for(var i=0; i<tangram.length; i++){
+			var mun = tangram[i].p;
+			var color = tangram[i].color;
+			toMove(context,mun,color);
+		}
+		function toMove(context,lines,color){
+			context.beginPath();
+			context.moveTo(lines[0].x,lines[0].y);
+			for(var j=1; j<lines.length; j++){
+				context.lineTo(lines[j].x,lines[j].y);
+			}
+			context.fillStyle = color;
+			context.fill();
+			context.closePath();
+		}*/
+		//弧线
+		/*for(var i=0; i<11; i++){
+			context.beginPath();
+			context.arc(40*i,100,16,0,0.2*i*Math.PI);
+			context.fillStyle = "red";
+			context.fill();
+			context.stroke();
+			context.closePath()
+		}
+		for(var i=0; i<11; i++){
+			context.beginPath();
+			context.arc(40*i,150,16,0,0.2*i*Math.PI);
+			context.fillStyle = "red";
+			
+			context.stroke();
+			context.closePath()
+		}*/
+		//制作时钟
+		
+	</script>
+</html>
