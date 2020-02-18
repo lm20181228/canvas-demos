@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>图片滤镜</title>
+	<style type="text/css">
+		.contollter{
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<canvas id="canvasOld" style="border:1px solid red;">
+			当前浏览器不支持canvas!
+		</canvas>
+		<canvas id="canvasNew"  style="border:1px solid red;">
+			当前浏览器不支持canvas!
+		</canvas>
+	</div>
+	<div class="contollter">
+		<button onclick = "filter()">filter</button>
+		<button onclick = "filter('red')">关闭红色通道</button>
+		<button onclick = "filter('green')">关闭绿色通道</button>
+		<button onclick = "filter('blue')">关闭蓝色通道</button>
+		<button onclick = "greyEffect()">Grey Effect</button>
+		<button onclick = "blackEffect()">black&white Effect</button>
+		<button onclick = "reverseEffect()">reverse Effect</button>
+	</div>
+
+</body>
+<script type="text/javascript">
+	// getImageData(x,y,w,h);获取图像像素，imageData对象中包含width.height,data
+	// putImagedata(getImageData,dx,dy,dirtyx,dirtY,dirtyW,diryH);
+	var canvasO = document.getElementById("canvasOld");
+	var contextO = canvasO.getContext("2d");
+
+	var canvasN = document.getElementById("canvasNew");
+	var contextN = canvasN.getContext("2d");
+
+	canvasO.width = canvasN.width = 600;
+	canvasO.height = canvasN.height = 350;
+	var img = new Image();
+	img.src = "image/fengj.jpg";
+	img.onload = function(){
+		contextO.drawImage(img,0,0,canvasO.width,canvasO.height);
+		
+	}
+	function filter(path){
+		var imageData = contextO.getImageData(0,0,canvasO.width,canvasO.height);
+		/**
+		*第i个像素的像素信息 
+		*r pixelData[4*i +0]
+		*g pixelData[4*i +1]
+		*b pixelData[4*i +2]
+		*a pixelData[4*i +3]
+		*/
+		var pixelData = imageData.data;
+		switch(path){
+			case "red":
+				for(var i=0; i<canvasN.width*canvasN.height; i++){
+					pixelData[4*i + 0] =0;
+				}
+			break;
+			case "green":
+				for(var i=0; i<canvasN.width*canvasN.height; i++){
+					pixelData[4*i + 1] =0;
+				}
+			break;
+			case "blue":
+				for(var i=0; i<canvasN.width*canvasN.height; i++){
+					pixelData[4*i + 2] =0;
+				}
+			break;
+			default:
+			break;
+		}
+		contextN.putImageData(imageData,0,0,0,0,canvasN.width,canvasN.height);
+	}
+	//	灰度效果	
+	function greyEffect(){
+		var imageData = contextO.getImageData(0,0,canvasO.width,canvasO.height);
+		var pixelData = imageData.data;
+		for(var i=0; i<canvasO.width*canvasO.height; i++){
+			var r = pixelData[4*i +0];
+			var g = pixelData[4*i +1];
+			var b = pixelData[4*i +2];
+			var grey = r*0.3 +g*0.59 +b*0.11;//灰度也可以取rgb的平均值
+			pixelData[4*i +0] = grey;
+			pixelData[4*i +1] = grey;
+			pixelData[4*i +2] =grey;		
+		}
+		contextN.putImageData(imageData,0,0,0,0,canvasN.width,canvasN.height);
+	}
+	// 黑白胶片效果
+	function blackEffect(){
+		var imageData = contextO.getImageData(0,0,canvasO.width,canvasO.height);
+		var pixelData = imageData.data;
+		for(var i=0; i<canvasN.width*canvasN.height; i++){
+			var r = pixelData[4*i + 0];
+			var g = pixelData[4*i + 1];
+			var b = pixelData[4*i + 2];
+			var grey = 0.3*r  + 0.59*g +0.11*b;
+			if(grey > 255/2){
+				grey = 255;
+			}else{
+				grey = 0;
+			}
+			pixelData[4*i +0] = grey;
+			pixelData[4*i +1] = grey;
+			pixelData[4*i +2] = grey;
+		}
+		contextN.putImageData(imageData,0,0,0,0,canvasN.width,canvasN.height);
+	}
+	// 反色通道
+	function reverseEffect(){
+		var imageData = contextO.getImageData(0,0,canvasO.width,canvasO.height);
+		var pixelData = imageData.data;
+		for(var i=0; i<canvasN.width*canvasN.height; i++){
+			var r = pixelData[4*i +0];
+			var g = pixelData[4*i +1];
+			var b = pixelData[4*i +2];
+
+			pixelData[4*i + 0] =255-r;
+			pixelData[4*i + 1] =255-g;
+			pixelData[4*i + 2] =255-b;
+		}
+		contextN.putImageData(imageData,0,0,0,0,canvasN.width,canvasN.height)
+
+	}
+
+</script>
+</html>
