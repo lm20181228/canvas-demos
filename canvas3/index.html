@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+	<canvas id="canvas" style="display:block;border:1px solid red;margin:0 auto">
+		浏览器不支持canvas!!
+	</canvas>
+	<input type="range" id="scale-range" min="0.5" max="3" step="0.01" value="1.0" name="" style="display: block;margin: 20px auto;width:500px;">
+	<canvas id="watermark-canvas" style="display: none;margin:0 auto;border:1px solid red"></canvas>
+</body>
+<script type="text/javascript">
+	var canvas = document.getElementById("canvas");
+	var context = canvas.getContext("2d");
+	var slider = document.getElementById("scale-range");
+	var watermarkCanvas = document.getElementById("watermark-canvas");
+	var watermarkContext = watermarkCanvas.getContext("2d");
+	
+	var image = new Image();
+
+	window.onload = function(){
+		canvas.width = 800;
+		canvas.height = 533;
+		
+
+		var scale = slider.value;
+		context.beginPath();
+		// context.fillStyle = "red";
+		// context.fillRect(100,100,400,400);
+		// drawImage(image,dx,dy);在dx，dy的位置绘制图片
+		// drawImage(img,dx,dy,dw,dh);在起始坐标以宽高为wh的绘制图片
+		// drawImage(img,sx,sy,sw,sh,dx,dy,dw,dh);获取图片像素点（sx,sy）为起始点，宽高为w，h的图片部分渲染在画布（dx,dy），宽高为w,h的区域
+		image.src = "image/fj.jpg";
+		image.onload = function (){
+			//context.drawImage(image,0,0,canvas.width,canvas.height);//以左上标为（0，0）位置开始绘制图片
+			// context.drawImage(image,0,0,200,200,100,100,canvas.width,canvas.height);
+			drawImageByScale(scale);
+			slider.onmousemove = function(){
+				var scale = slider.value;
+				drawImageByScale(scale);
+			}
+		}
+
+		context.closePath();
+		// 准备水印
+		watermarkCanvas.width =  230;
+		watermarkCanvas.height = 60;
+		watermarkContext.font = "30px solid A";
+		watermarkContext.fillStyle = "rgba(0,0,0,0.5)";
+		watermarkContext.textBaseline = "middle";
+		watermarkContext.textAlign = "left";
+		watermarkContext.fillText("== 自制水印 ==",0,30);
+		
+
+	}	
+	function drawImageByScale(scale){
+		context.clearRect(0,0,canvas.width,canvas.height);
+		var imageWidth =canvas.width*scale;
+		var imageHeight = canvas.height*scale;
+		var sx = -(imageWidth - canvas.width)/2;
+		var sy = -(imageHeight - canvas.height)/2;
+		context.drawImage(image,0,0,canvas.width,canvas.height,sx,sy,imageWidth,imageHeight);
+		// 绘制水印
+		console.log(canvas.width-watermarkCanvas.width);
+		context.drawImage(watermarkCanvas,canvas.width-watermarkCanvas.width,canvas.height-watermarkCanvas.height);
+	}
+	
+</script>
+</html>

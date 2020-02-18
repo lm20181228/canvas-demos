@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>放大镜效果</title>
+</head>
+<body>
+	<canvas id="canvas">
+		当前浏览器不支持canvas!
+	</canvas>
+	<canvas id="off-canvas" style="display: none">
+		当前浏览器不支持canvas!
+	</canvas>
+
+</body>
+<script type="text/javascript">
+	var canvas = document.getElementById("canvas");
+	var context = canvas.getContext("2d");
+	var off_canvas = document.getElementById("off-canvas");
+	var offContext = off_canvas.getContext("2d");
+	var scale = 0;
+	window.onload =  function(){
+		
+		// 鼠标与canvas的鼠标交互，实现放大镜效果
+	}
+	canvas.width = 600;
+	canvas.height = 320;
+	
+	var img = new Image();
+	img.src = "image/big.png";
+	img.onload =  function(){
+		offContext.width = img.width;
+		offContext.height = img.height;
+		scale = offContext.width/canvas.width;
+		context.drawImage(img,0,0,canvas.width,canvas.height);
+		offContext.drawImage(img,0,0);
+	}
+	var isMouseDown = false;
+	function windowToCanvas(x,y){
+		var bbox = canvas.getBoundingClientRect();
+		var point = {x:x - bbox.left,y:y - bbox.top};
+		drawCanvasWidthMagnifier(true,point);
+	}
+	canvas.onmousedown =  function(e){
+		e.preventDefault();
+		isMouseDown = true;
+		windowToCanvas(e.clientX,e.clientY);
+
+	}
+	canvas.onmouseup = function(e){
+		e.preventDefault();
+		isMouseDown  =false;
+		drawCanvasWidthMagnifier(false);
+
+	}
+	canvas.onmousemove = function(e){
+		if(isMouseDown){
+			windowToCanvas(e.clientX,e.clientY);
+		}
+	}
+	canvas.onmouseout = function(e){
+		e.preventDefault();
+		isMouseDown = false;
+		drawCanvasWidthMagnifier(false);
+	}
+	function drawCanvasWidthMagnifier(isShowMagnifiter,point){
+		context.clearRect(0,0,canvas.width,canvas.height);
+		context.drawImage(img,0,0,canvas.width,canvas.height);
+		if(isShowMagnifiter){
+			drawMagnifiter(point);
+		}
+	}
+	function drawMagnifiter(point){
+
+
+		context.save();
+		context.beginPath();
+		var img_cx = point.x*scale;
+		var img_cy = point.y*scale;
+		var mr = 100;
+		var sx = img_cx - mr; 
+		var sy = img_cy - mr; 
+		var dx = point.x-mr;
+		var dy = point.y-mr;
+		context.strokeStyle = "green";
+		context.lineWidth = 3;
+		context.arc(point.x,point.y,mr,0,2*Math.PI);
+		context.clip();
+		context.drawImage(img,sx,sy,mr*2,mr*2,dx,dy,mr*2,mr*2);//圆形放大镜
+		//context.drawImage(img,sx,sy,mr*2,mr*2,point.x-mr,point.y-mr,mr*2,mr*2);//方形放大镜
+		context.stroke();
+		context.closePath();
+		context.restore();
+	}
+</script>
+</html>
