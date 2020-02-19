@@ -23,9 +23,11 @@
 		<button onclick = "filter('red')">关闭红色通道</button>
 		<button onclick = "filter('green')">关闭绿色通道</button>
 		<button onclick = "filter('blue')">关闭蓝色通道</button>
-		<button onclick = "greyEffect()">Grey Effect</button>
-		<button onclick = "blackEffect()">black&white Effect</button>
-		<button onclick = "reverseEffect()">reverse Effect</button>
+		<button onclick = "greyEffect()">灰度</button>
+		<button onclick = "blackEffect()">非黑即白</button>
+		<button onclick = "reverseEffect()">颜色反转</button>
+		<button onclick = "vagueEffect()">模糊</button>
+		<button onclick = "mosaicEffect()">马赛克</button>
 	</div>
 
 </body>
@@ -126,8 +128,64 @@
 			pixelData[4*i + 2] =255-b;
 		}
 		contextN.putImageData(imageData,0,0,0,0,canvasN.width,canvasN.height)
-
 	}
+	// 模糊滤镜
+	function vagueEffect(){
+		var imageData = contextO.getImageData(0,0,canvasO.width,canvasO.height);
+		var pixelData = imageData.data;
+		// 模糊滤镜的效果主要是把这个像素点的值赋值为周围点的平均值
+		var blur = 2;//设置模糊的范围
+		var total = (2*blur+1)*(2*blur+1);		
+		// 模糊存在边界模糊不了的情况，主要是因为为了避免边界模糊出界，直接以设置的范围点做为起始点开始模糊，而不是从（0，0）点，所以还需要优化处理。
+		for(var j=blur; j<=canvasO.height-blur; j++){
+			for(var i=blur; i<=canvasO.width-blur; i++){
+				var r=0,g=0,b=0;
+				for(var leny=-blur; leny<=blur; leny++){
+					for(var lenx=-blur; lenx<=blur; lenx++){
+						r+=pixelData[4*((j+leny)*canvasO.width+i+lenx)+0];
+						g+=pixelData[4*((j+leny)*canvasO.width+i+lenx)+1];
+						b+=pixelData[4*((j+leny)*canvasO.width+i+lenx)+2];
+					}
+				}
+				pixelData[4*(j*canvasO.width+i)+0] = r/total;
+				pixelData[4*(j*canvasO.width+i)+1] = g/total;
+				pixelData[4*(j*canvasO.width+i)+2] = b/total;
+			}
+		}
+		contextN.putImageData(imageData,0,0,0,0,canvasN.width,canvasN.height);
+	}
+	// 马赛克滤镜 主要是将基准点范围内的点都设置成一个平均颜色
+	function mosaicEffect(){
+		var imageData = contextO.getImageData(0,0,canvasO.width,canvasO.height);
+		var pixelData = imageData.data;
+		var blur = 3;//设置马赛克范围
+		var blurR = 2*blur+1;
+		var total = (2*blur+1)*(2*blur+1);
+		
+		for(var j=blur; j<=canvasO.height-blur; j=j+blurR){
+			for(var i=blur; i<=canvasO.width-blur; i=i+blurR){
+				var r=0,g=0,b=0;
+				for(var leny = -blur; leny<=blur; leny++){
+					for(var lenx = -blur; lenx<=blur; lenx++){
+						r+=pixelData[4*((j+leny)*canvasO.width+i+lenx)+0];
+						g+=pixelData[4*((j+leny)*canvasO.width+i+lenx)+1];
+						b+=pixelData[4*((j+leny)*canvasO.width+i+lenx)+2];
+					}
+				}
+				var vr=r/total;
+				var vg=g/total;
+				var vb=b/total;
+				for(var leny = -blur; leny<=blur; leny++){
+					for(var lenx = -blur; lenx<=blur; lenx++){
+						pixelData[4*((j+leny)*canvasO.width+i+lenx)+0]=vr;
+						pixelData[4*((j+leny)*canvasO.width+i+lenx)+1]=vg;
+						pixelData[4*((j+leny)*canvasO.width+i+lenx)+2]=vb;
+					}
+				}
+			}
+		}
 
+		contextN.putImageData(imageData,0,0,0,0,canvasN.width,canvasN.height);
+	}
 </script>
 </html>
